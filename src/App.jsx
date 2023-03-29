@@ -7,7 +7,7 @@ import Cart from './components/Cart/Cart';
 import Form from './components/UI/Form';
 import './App.css';
 import Confirmation from './components/UI/Confirmation';
-import ProductView from './components/shop/ProductView';
+import ProductView from './components/ProductView/ProductView';
 
 function App() {
   const [formIsShown, setFormIsShown] = useState(false);
