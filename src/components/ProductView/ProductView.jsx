@@ -1,12 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { BsArrow90DegLeft, BsPencilSquare, BsFillSendPlusFill } from 'react-icons/bs';
 import { useParams, useNavigate } from 'react-router-dom';
+import { newCommentAction } from '../../actions/actions';
 import { store } from '../../store/store';
 import Button from '../UI/Button';
 import './ProductView.css';
 
 const ProductView = (props) => {
-  const commentAddRef = useRef(null);
+  const [commentIsValid, setCommentIsValid] = useState(true);
+  const commentAddRef = useRef();
   const productId = useParams();
   const navigate = useNavigate();
   const productsCopy = store.getState().products;
@@ -17,6 +19,24 @@ const ProductView = (props) => {
     (comment) => comment.productId === +productId.id,
   );
 
+  const onAddingComment = (event) => {
+    event.preventDefault();
+    const enteredComment = commentAddRef.current.value;
+
+    if (enteredComment.trim().length === 0) {
+      setCommentIsValid(false);
+      setTimeout(() => {
+        setCommentIsValid(true);
+      }, 5000);
+      return;
+    }
+    const newComment = {
+      enteredComment,
+      productId,
+    };
+    commentAddRef.current.value = '';
+    store.dispatch(newCommentAction(newComment));
+  };
   console.log(currentProductComment);
   return (
     <div className="product-details">
@@ -74,12 +94,16 @@ const ProductView = (props) => {
           })}
         </div>
       </div>
-      <form className="product-addingComments" onSubmit={onAddingCommet}>
-        <textarea className="adding-field"></textarea>
+      <form className="product-addingComments" onSubmit={onAddingComment}>
+        <textarea
+          ref={commentAddRef}
+          className="adding-field"
+          placeholder="Enter some comment"></textarea>
         <Button className="addingComment" Submit="submit">
           <BsFillSendPlusFill size={16} />
         </Button>
       </form>
+      {!commentIsValid && <p className="comments-error">Please enter some text!</p>}
     </div>
   );
 };

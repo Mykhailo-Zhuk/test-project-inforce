@@ -6,7 +6,7 @@ import { store } from '../../store/store.js';
 import { newProductAction } from '../../actions/actions.js';
 
 const Form = (props) => {
-  const [nameIsValid, setNameIsValid] = useState(true);
+  const [formIsValid, setFormIsValid] = useState(true);
   const nameProductRef = useRef();
   const priceProductRef = useRef();
   const imageUrlProductRef = useRef();
@@ -23,7 +23,10 @@ const Form = (props) => {
       enteredPrice.trim().length === 0 ||
       enteredImageUrl.trim().length === 0
     ) {
-      setNameIsValid(false);
+      setFormIsValid(false);
+      setTimeout(() => {
+        setFormIsValid(true);
+      }, 5000);
       return;
     }
     const product = {
@@ -37,18 +40,26 @@ const Form = (props) => {
   return (
     <Modal onClose={props.onClose}>
       <form onSubmit={onSubmitHandler} className="form">
-        <p>New Product</p>
-        <Input ref={nameProductRef} label="Product name:" input={{ id: 'amount', type: 'text' }} />
+        <p style={{ padding: '10px 0 15px 0' }}>New Product</p>
+        <Input
+          ref={nameProductRef}
+          label="Product name:"
+          input={{ id: Math.random().toFixed(6), type: 'text' }}
+        />
         <Input
           ref={priceProductRef}
           label="Product price:"
-          input={{ id: 'amount', type: 'number' }}
+          input={{ id: Math.random().toFixed(6), type: 'number' }}
         />
-        <Input ref={imageUrlProductRef} label="Image url:" input={{ id: 'amount', type: 'text' }} />
+        <Input
+          ref={imageUrlProductRef}
+          label="Image url:"
+          input={{ id: Math.random().toFixed(6), type: 'text' }}
+        />
         <div className="actions">
           <button onClick={props.onClose}>Close</button>
           <button type="submit">Add</button>
-          {!nameIsValid && <p className="error">Please enter valid name or price</p>}
+          {!formIsValid && <p className="error">Please enter valid name or price</p>}
         </div>
       </form>
     </Modal>

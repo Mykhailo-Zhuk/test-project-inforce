@@ -8,22 +8,16 @@ export const reducer = (state = initialState, action) => {
       return { products: [...action.payload] };
     }
     case 'NEW_PRODUCT': {
-      let product = state.products.find((el) => el.id === action.id);
+      let product = state.products.find((product) => product.id === action.id);
       if (product) {
         return { ...state };
       } else {
-        const newProduct = state.products.concat([
-          {
-            id: action.id,
-            productName: action.productName,
-            price: action.price,
-            productImage: action.productImage,
-            amount: action.amount,
-          },
-        ]);
-
-        return { products: newProduct };
+        return { ...state, products: [...state.products, action.payload] };
       }
+    }
+
+    case 'NEW_COMMENT': {
+      return { ...state, comments: [...state.comments, action.payload] };
     }
 
     case 'SORT_PRODUCT_ALPHABETICALLY': {

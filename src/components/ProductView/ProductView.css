@@ -205,3 +205,9 @@
   -ms-transition: all 0.3s ease-in;
   -o-transition: all 0.3s ease-in;
 }
+
+.comments-error {
+  color: red;
+  text-align: center;
+  padding: 0 0 15px 0;
+}
