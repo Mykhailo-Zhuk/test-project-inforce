@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
 import Modal from './Modal.js';
 import './Modal.css';
-import Input from './Input.js';
+import Input from './Input.jsx';
 import { store } from '../../store/store.js';
-import { newProduct } from '../../actions/actions.js';
+import { newProductAction } from '../../actions/actions.js';
 
 const Form = (props) => {
   const [nameIsValid, setNameIsValid] = useState(true);
@@ -31,7 +31,7 @@ const Form = (props) => {
       enterePriceNumber,
       enteredImageUrl,
     };
-    store.dispatch(newProduct(product));
+    store.dispatch(newProductAction(product));
     props.onClose();
   };
   return (

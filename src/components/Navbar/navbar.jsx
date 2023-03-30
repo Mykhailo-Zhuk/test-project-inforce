@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import { BsBagCheck } from 'react-icons/bs';
 import './navbar.css';
 import { store } from '../../store/store';
-import { sortProductAlphabetically, sortProductByCount } from '../../actions/actions';
+import { sortProductAlphabeticallyAction, sortProductByCountAction } from '../../actions/actions';
 
 export const Navbar = () => {
   const onChangeHandler = (e) => {
-    if (e.target.value === 'Alphabetically') return store.dispatch(sortProductAlphabetically());
-    if (e.target.value === 'By Count') return store.dispatch(sortProductByCount());
+    if (e.target.value === 'Alphabetically')
+      return store.dispatch(sortProductAlphabeticallyAction());
+    if (e.target.value === 'By Count') return store.dispatch(sortProductByCountAction());
   };
   return (
     <div className="navbar">

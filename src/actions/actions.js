@@ -1,6 +1,10 @@
 import { store } from '../store/store';
 
-export const newProduct = (obj) => {
+export const addProductsAction = (payload) => {
+  return { type: 'ADD_PRODUCTS', payload };
+};
+
+export const newProductAction = (obj) => {
   const state = store.getState().products;
   const newID = state.length + 1;
   return {
@@ -13,21 +17,21 @@ export const newProduct = (obj) => {
   };
 };
 
-export const deleteProduct = (id) => {
+export const deleteProductAction = (id) => {
   return {
     type: 'DELETE_PRODUCT',
     id,
   };
 };
 
-export const sortProductAlphabetically = () => {
+export const sortProductAlphabeticallyAction = () => {
   console.log('Case 1');
   return {
     type: 'SORT_PRODUCT_ALPHABETICALLY',
   };
 };
 
-export const sortProductByCount = () => {
+export const sortProductByCountAction = () => {
   console.log('Case 1');
   return {
     type: 'SORT_PRODUCT_BY_COUNT',

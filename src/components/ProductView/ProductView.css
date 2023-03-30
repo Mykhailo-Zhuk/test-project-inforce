@@ -5,9 +5,10 @@
 }
 
 .product-details {
+  position: relative;
   border-radius: 15px;
   width: fit-content;
-  height: 100vh;
+  height: 100%;
   margin: 5px auto;
   display: flex;
   flex-direction: column;
@@ -15,10 +16,10 @@
   align-items: center;
   gap: 10px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  overflow-y: scroll;
 }
 
 .product-view {
-  position: relative;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -26,8 +27,6 @@
   gap: 10px;
   height: 80%;
   width: 600px;
-  margin: 0 auto;
-  overflow: auto;
 }
 
 .product-img {
@@ -45,11 +44,11 @@
   padding: 5px 0;
 }
 
-.continue-shopping {
+.product-continue-shopping {
   position: absolute;
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  top: 5px;
+  top: 75px;
   right: 30px;
   width: 45px;
   height: 45px;
@@ -61,16 +60,148 @@
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
 }
-.continue-shopping button {
+.product-continue-shopping_btn {
   border: none;
   background: transparent;
   cursor: pointer;
 }
-.continue-shopping:hover {
+.product-continue-shopping:hover {
   scale: 1.1;
   transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
+}
+.product-description {
+  position: relative;
+  width: 80%;
+  margin: 15px 0;
+  padding: 0 5px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+.product-description p {
+  padding: 5px 0;
+}
+.product-edit {
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  bottom: 5px;
+  right: 5px;
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+.product-edit_btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+.product-edit:hover {
+  scale: 1.1;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+}
+.product-comments {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+}
+
+.comments_items {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.comments_item {
+  width: 100%;
+  position: relative;
+  margin: 10px 0;
+  padding: 0 5px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+.comments_description {
+  padding: 10px 0 20px 0;
+}
+
+.comments_date {
+  color: blueviolet;
+}
+
+.product-addingComments {
+  width: 80%;
+  min-height: 80px;
+  position: relative;
+  margin: 10px 0;
+  padding: 0 5px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.adding-field {
+  width: 90%;
+  min-height: inherit;
+  padding: 5px;
+  outline: none;
+  border: none;
+  resize: none;
+}
+
+.product-addingComment {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 30px;
+  height: 28px;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+.product-addingComment_btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.product-addingComment:hover {
+  scale: 1.1;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in;
+  -webkit-transition: all 0.3s ease-in;
+  -moz-transition: all 0.3s ease-in;
+  -ms-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
 }

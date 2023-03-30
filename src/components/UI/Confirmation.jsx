@@ -1,12 +1,12 @@
 import React from 'react';
-import { deleteProduct } from '../../actions/actions';
+import { deleteProductAction } from '../../actions/actions';
 import { store } from '../../store/store';
 import Modal from './Modal';
 import './Modal.css';
 
 const Confirmation = (props) => {
   const onSubmit = () => {
-    store.dispatch(deleteProduct(props.idOfDeleteProduct));
+    store.dispatch(deleteProductAction(props.idOfDeleteProduct));
     props.onClose();
   };
   return (

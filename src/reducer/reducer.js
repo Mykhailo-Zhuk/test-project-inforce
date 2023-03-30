@@ -1,15 +1,12 @@
-// const fetchData = () =>
-//   fetch('localhost:3000/posts')
-//     .then((data) => console.log(data))
-//     .catch((error) => console.log(error));
+import { comments, products } from '../products';
 
-import { PRODUCTS } from '../products';
+const initialState = { products: [...products], comments: [...comments] };
 
-const initialState = {
-  products: [...PRODUCTS],
-};
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'ADD_PRODUCTS': {
+      return { products: [...action.payload] };
+    }
     case 'NEW_PRODUCT': {
       let product = state.products.find((el) => el.id === action.id);
       if (product) {
