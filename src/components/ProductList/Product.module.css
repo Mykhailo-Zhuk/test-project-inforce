@@ -1,0 +1,102 @@
+.product {
+  position: relative;
+  border-radius: 15px;
+  width: 400px;
+  height: 550px;
+  margin: 40px;
+  padding: 10px 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+.product_imgContainer {
+  width: 260px;
+  height: 260px;
+}
+.product_img {
+  width: 100%;
+  height: 100%;
+}
+
+.product_img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.product:hover {
+  scale: 1.1;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+}
+
+.product_description {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: fit-content;
+}
+
+.product_btn {
+  padding: 5px 0;
+}
+
+.addToCart_btn {
+  background-color: transparent;
+  border: 2px solid rgb(19, 19, 19);
+  padding: 10px 15px;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+.addNewProduct_btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.addToCart_btn:hover {
+  scale: 1.1;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+}
+.addToCart_btn:hover {
+  background-color: rgb(19, 19, 19);
+  color: white;
+  cursor: pointer;
+}
+
+.product_delete {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  width: 40px;
+  height: 40px;
+}
+.product_deleteBtn {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+}
+.product_deleteBtn:hover {
+  scale: 1.1;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+}

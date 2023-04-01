@@ -1,24 +1,35 @@
 import React, { useRef, useState } from 'react';
-import { BsArrow90DegLeft, BsPencilSquare, BsFillSendPlusFill } from 'react-icons/bs';
 import { useParams, useNavigate } from 'react-router-dom';
-import { newCommentAction } from '../../actions/actions';
-import { store } from '../../store/store';
-import Button from '../UI/Button';
-import './ProductView.css';
+import { BsArrow90DegLeft, BsPencilSquare, BsFillSendPlusFill } from 'react-icons/bs';
+import Comment from './Comment';
+import classes from './ProductView.module.css';
+import { connect } from 'react-redux';
+import { addNewComment } from '../../actions/asyncActions';
+
+function mapToProps(state) {
+  const productsCopy = state.products;
+  const productsCommentsCopy = state.comments;
+  return { productsCopy, productsCommentsCopy };
+}
+
+function mapDispatch(dispatch) {
+  return {
+    newComment: (payload) => dispatch(addNewComment(payload)),
+  };
+}
 
 const ProductView = (props) => {
   const [commentIsValid, setCommentIsValid] = useState(true);
   const commentAddRef = useRef();
-  const productId = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
-  const productsCopy = store.getState().products;
-  const currentProduct = productsCopy.filter((product) => product.id === +productId.id);
 
-  const productsCommentsCopy = store.getState().comments;
-  const currentProductComment = productsCommentsCopy.filter(
-    (comment) => comment.productId === +productId.id,
+  const { productsCopy, productsCommentsCopy, newComment, onShowEditingForm } = props;
+  const currentProduct = productsCopy?.filter((product) => product.id === +id);
+
+  const currentProductComment = productsCommentsCopy?.filter(
+    (comment) => comment.productId === +id,
   );
-
   const onAddingComment = (event) => {
     event.preventDefault();
     const enteredComment = commentAddRef.current.value;
@@ -30,31 +41,48 @@ const ProductView = (props) => {
       }, 5000);
       return;
     }
-    const newComment = {
-      enteredComment,
-      productId,
+
+    const idOfNewComment = productsCommentsCopy.length + 1;
+
+    const curDate = new Date();
+
+    const locateTime = curDate.toLocaleTimeString('uk-Uk', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+    const locateDate = curDate.toLocaleDateString('uk-Uk', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+
+    const date = `${locateTime} ${locateDate}`;
+
+    const payload = {
+      id: idOfNewComment,
+      productId: +id,
+      description: enteredComment,
+      date,
     };
     commentAddRef.current.value = '';
-    store.dispatch(newCommentAction(newComment));
+    newComment(payload);
   };
-  console.log(currentProductComment);
+
   return (
-    <div className="product-details">
-      <div className="product-title">
+    <div className={classes.product_details}>
+      <div className={classes.product_title}>
         <h2>Tech Shop</h2>
       </div>
       {currentProduct.map((prod) => {
         const { id, name, weight, size, imageUrl, count } = prod;
         return (
-          <div className="product-view" key={id}>
-            <div className="product-img">
-              <img src={imageUrl} alt="product-image" />
+          <div className={classes.product_view} key={id}>
+            <div className={classes.product_imgContainer}>
+              <img src={imageUrl} alt="product" />
             </div>
-            <div className="product-description">
+            <h2 className={classes.product_name}>{name}</h2>
+            <div className={classes.product_description}>
               <div>
-                <p>
-                  <b>{name}</b>
-                </p>
                 <p>
                   Count: <span>{count}</span>
                 </p>
@@ -67,45 +95,48 @@ const ProductView = (props) => {
                   <span>{size.height}</span>
                 </p>
               </div>
-              <Button className="edit">
-                <BsPencilSquare size={32} />
-              </Button>
+              <div className={classes.product_edit}>
+                <button
+                  type="button"
+                  className={classes.product_editBtn}
+                  onClick={() => onShowEditingForm(+id)}>
+                  <BsPencilSquare size={18} />
+                </button>
+              </div>
             </div>
           </div>
         );
       })}
-      <Button className="continue-shopping" onClick={() => navigate('/')}>
-        <BsArrow90DegLeft size={32} />
-      </Button>
-      <div className="product-comments">
-        <h2 className="comments_header">Comments</h2>
-        <div className="comments_items">
-          {currentProductComment.map((comment) => {
-            return (
-              <div className="comments_item">
-                <div className="comments_description">
-                  <p>{comment.description}</p>
-                </div>
-                <div className="comments_date">
-                  <p>{comment.date}</p>
-                </div>
-              </div>
-            );
+      <div className={classes.product_continueShopping}>
+        <button
+          type="button"
+          className={classes.product_continueShoppingBtn}
+          onClick={() => navigate('/')}>
+          <BsArrow90DegLeft size={32} />
+        </button>
+      </div>
+      <div className={classes.product_comments}>
+        <h2 className={classes.comments_header}>Comments</h2>
+        <div className={classes.comments_items}>
+          {currentProductComment?.map((el) => {
+            return <Comment data={el} key={Math.random().toFixed(6) * 10000} />;
           })}
         </div>
       </div>
-      <form className="product-addingComments" onSubmit={onAddingComment}>
+      <form className={classes.product_addingComments} onSubmit={onAddingComment}>
         <textarea
           ref={commentAddRef}
-          className="adding-field"
+          className={classes.product_addingField}
           placeholder="Enter some comment"></textarea>
-        <Button className="addingComment" Submit="submit">
-          <BsFillSendPlusFill size={16} />
-        </Button>
+        <div className={classes.product_addingComment}>
+          <button type="submit" className={classes.product_addingCommentBtn}>
+            <BsFillSendPlusFill size={18} />
+          </button>
+        </div>
       </form>
-      {!commentIsValid && <p className="comments-error">Please enter some text!</p>}
+      {!commentIsValid && <p className={classes.comments_error}>Please enter some text!</p>}
     </div>
   );
 };
 
-export default ProductView;
+export default connect(mapToProps, mapDispatch)(ProductView);

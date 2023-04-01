@@ -1,12 +1,17 @@
-import { comments, products } from '../products';
-
-const initialState = { products: [...products], comments: [...comments] };
+const initialState = {
+  products: [],
+};
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_PRODUCTS': {
       return { products: [...action.payload] };
     }
+
+    case 'ADD_COMMENTS': {
+      return { ...state, comments: [...action.payload] };
+    }
+
     case 'NEW_PRODUCT': {
       let product = state.products.find((product) => product.id === action.id);
       if (product) {
@@ -21,29 +26,42 @@ export const reducer = (state = initialState, action) => {
     }
 
     case 'SORT_PRODUCT_ALPHABETICALLY': {
-      console.log(action);
-      const stateCopy = state;
-      const data = stateCopy.products.sort(function (a, b) {
-        if (a.productName < b.productName) {
-          return -1;
-        }
-        if (a.productName > b.productName) {
-          return 1;
-        }
+      const productsCopy = state.products;
+      const sortedProducts = productsCopy.sort((a, b) => {
+        const nameA = a.name.toLowerCase(),
+          nameB = b.name.toLowerCase();
+
+        if (nameA < nameB) return -1;
+        if (nameA > nameB) return 1;
+
         return 0;
       });
-      return { ...data };
+
+      return { ...state, products: sortedProducts };
     }
     case 'SORT_PRODUCT_BY_COUNT': {
-      const stateCopy = state;
-      const data = stateCopy.products.sort(function (a, b) {
-        return a.id - b.id;
-      });
-      return { ...data };
+      const productsCopy = state.products;
+      const sortedProducts = productsCopy.sort((a, b) => a.count - b.count);
+
+      return { ...state, products: sortedProducts };
     }
     case 'DELETE_PRODUCT': {
-      const filteredProducts = state.products.filter((el) => el.id !== action.id);
-      return { products: filteredProducts };
+      const filteredProduct = state.products.filter((el) => el.id !== action.id);
+      return { ...state, products: filteredProduct };
+    }
+
+    case 'DELETE_COMMENT': {
+      const filteredComment = state.comments.filter((el) => el.id !== action.id);
+      return { ...state, comments: filteredComment };
+    }
+
+    case 'EDITING_PRODUCT': {
+      const productsCopy = state.products;
+      const indexOfCurrentProduct = productsCopy.findIndex(
+        (product) => product.id === action.payload.id,
+      );
+      productsCopy.splice(indexOfCurrentProduct, 1);
+      return { ...state, products: [...state.products, action.payload] };
     }
 
     default:

@@ -9,11 +9,6 @@
   margin-right: 1rem;
   width: 200px;
 }
-.error {
-  text-align: center;
-  color: red;
-  font-weight: bold;
-}
 
 .input input {
   width: 30%;

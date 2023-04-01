@@ -1,19 +1,27 @@
 import React, { useRef, useState } from 'react';
-import { connect } from 'react-redux';
 import Modal from './Modal';
-import classes from './Modal.module.css';
+import classes from './EditingForm.module.css';
 import Input from './Input';
-import { addNewProduct } from '../../actions/asyncActions';
+import { connect } from 'react-redux';
+import { updateProduct } from '../../actions/asyncActions';
+
+function mapToProps(state) {
+  const productsCopy = state.products;
+  return { productsCopy };
+}
 
 function mapDispatch(dispatch) {
   return {
-    addNewProduct: (payload) => dispatch(addNewProduct(payload)),
+    editedProduct: (payload) => dispatch(updateProduct(payload)),
   };
 }
 
-const Form = (props) => {
+const EditingForm = (props) => {
   const [formIsValid, setFormIsValid] = useState(true);
-  const { addNewProduct, onClose } = props;
+  const { productsCopy, onClose, editedProduct } = props;
+
+  const currentProduct = productsCopy.filter((product) => product.id === +props.id);
+  const { id, name, weight, size, imageUrl, count } = currentProduct[0];
 
   const nameProductRef = useRef();
   const imageUrlProductRef = useRef();
@@ -47,10 +55,8 @@ const Form = (props) => {
       }, 5000);
       return;
     }
-    const newID = Math.random().toFixed(6) * 100000;
-
     const payload = {
-      id: newID,
+      id,
       name: enteredName,
       imageUrl: enteredImageUrl,
       count: enteredCountNumber,
@@ -60,62 +66,53 @@ const Form = (props) => {
       },
       weight: enteredWeight,
     };
-    addNewProduct(payload);
+    editedProduct(payload);
     onClose();
   };
 
-  const mathRandom = () => Math.random().toFixed(4) * 100000;
+  const mathRandom = () => Math.random().toFixed(4) * 10000;
   return (
     <Modal onClose={onClose}>
       <form onSubmit={onSubmitHandler} className={classes.form}>
-        <p className={classes.header}>New Product</p>
+        <p className={classes.header}>Editing Product</p>
         <Input
           ref={nameProductRef}
           label="Product name:"
-          input={{ id: mathRandom(), type: 'text' }}
+          input={{ id: mathRandom(), type: 'text', defaultValue: name }}
         />
         <Input
           ref={imageUrlProductRef}
           label="Product image url:"
-          input={{ id: mathRandom(), type: 'text' }}
+          input={{ id: mathRandom(), type: 'text', defaultValue: imageUrl }}
         />
         <Input
           ref={countProductRef}
           label="Product count:"
-          input={{
-            id: mathRandom(),
-            type: 'number',
-          }}
+          input={{ id: mathRandom(), type: 'number', defaultValue: count }}
         />
         <Input
           ref={widthProductRef}
           label="Product width:"
-          input={{
-            id: mathRandom(),
-            type: 'number',
-          }}
+          input={{ id: mathRandom(), type: 'number', defaultValue: size.width }}
         />
         <Input
           ref={heightProductRef}
           label="Product height:"
-          input={{
-            id: mathRandom(),
-            type: 'number',
-          }}
+          input={{ id: mathRandom(), type: 'number', defaultValue: size.height }}
         />
         <Input
           ref={weightProductRef}
           label="Product weight:"
-          input={{ id: mathRandom(), type: 'text' }}
+          input={{ id: mathRandom(), type: 'text', defaultValue: weight }}
         />
         <div className={classes.actions}>
           <button onClick={onClose}>Close</button>
-          <button type="submit">Add</button>
-          {!formIsValid && <p className={classes.error}>Please enter valid input</p>}
+          <button type="submit">Edit</button>
+          {!formIsValid && <p className={classes.error}>Please enter valid name or price</p>}
         </div>
       </form>
     </Modal>
   );
 };
 
-export default connect(null, mapDispatch)(Form);
+export default connect(mapToProps, mapDispatch)(EditingForm);

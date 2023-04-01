@@ -1,0 +1,16 @@
+.products_wrapper {
+  padding: 5px;
+}
+.products_title {
+  margin-top: 80px;
+  text-align: center;
+  font-size: 30px;
+}
+.products_list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}

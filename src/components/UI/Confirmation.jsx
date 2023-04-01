@@ -1,18 +1,26 @@
 import React from 'react';
-import { deleteProductAction } from '../../actions/actions';
-import { store } from '../../store/store';
+import { connect } from 'react-redux';
+import { deleteProduct } from '../../actions/asyncActions';
 import Modal from './Modal';
-import './Modal.css';
+import classes from './Modal.module.css';
+
+function mapDispatch(dispatch) {
+  return {
+    deleteProduct: (id) => dispatch(deleteProduct(id)),
+  };
+}
 
 const Confirmation = (props) => {
+  const { deleteProduct, onClose, idOfDeleteProduct } = props;
+
   const onSubmit = () => {
-    store.dispatch(deleteProductAction(props.idOfDeleteProduct));
-    props.onClose();
+    deleteProduct(idOfDeleteProduct);
+    onClose();
   };
   return (
-    <Modal onClose={props.onClose}>
-      <h2>Are you sure you want to remove this product?</h2>
-      <div className="actions">
+    <Modal onClose={onClose}>
+      <h2>Are you want to remove this product?</h2>
+      <div className={classes.actions}>
         <button onClick={onSubmit}>Agree</button>
         <button onClick={props.onClose}>Disagree</button>
       </div>
@@ -20,4 +28,4 @@ const Confirmation = (props) => {
   );
 };
 
-export default Confirmation;
+export default connect(null, mapDispatch)(Confirmation);
